@@ -6,7 +6,7 @@
           <p class="card-header-title">{{ title }}</p>
         </header>
         <div class="card-content">
-          <div class="content">
+          <div class="content" v-if="!loader">
 
             <b-table
               v-if="options"
@@ -43,6 +43,9 @@
             </b-table>
 
           </div>
+          <div class="content" v-else>
+            <loadingIcon />
+          </div>
         </div>
  
       </div>
@@ -50,9 +53,18 @@
 </template>
 
 <script>
+  import loadingIcon from '../components/loadingIcon'
+
+
   export default {
+
+    components: {
+      loadingIcon
+    },
+    
     props: {
       title: String,
+      loader: Boolean,
       options: Array,
     }
   }

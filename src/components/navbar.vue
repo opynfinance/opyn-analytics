@@ -14,12 +14,22 @@
             to="/addresses">
             Addresses
           </router-link>
+
+          <router-link 
+            :class="`navbar-item ${this.$route.name === 'v1Addresses' ? 'is-active' : ''}`" 
+            to="/v1-addresses">
+            v1 Addresses
+          </router-link>
         </div>
       </div>
     </nav>
 
     <Logo />
-    <h1 class="subtitle has-text-centered">Opyn v2 Gamma Protocol Analytics</h1>
+    <h1 class="subtitle has-text-centered mb-4">
+      Opyn 
+      {{ this.$route.name.includes('v1') ? 'v1 Convexity Protocol' : 'v2 Gamma Protocol' }}
+      Analytics
+    </h1>
 
   </div>
 </template>

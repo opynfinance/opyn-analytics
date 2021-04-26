@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <logo />
+    <Logo />
 
     <h1 class="subtitle has-text-centered">Opyn v2 Gamma Protocol Analytics</h1>
 
@@ -21,12 +21,12 @@
 </template>
 
 <script>
-import logo from '../components/logo'
+import Logo from './Logo'
 
 
 export default {
   components: {
-    logo
+    Logo
   },
 }
 </script>

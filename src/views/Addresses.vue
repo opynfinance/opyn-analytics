@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <navbar />
+    <Navbar />
 
     <div class="columns is-multiline mx-1 my-2">
 
@@ -48,13 +48,13 @@
 
 <script>
 
-import navbar from '../components/navbar'
+import Navbar from '../components/Navbar'
 import recapCard from '../components/recapCard'
 
 
 export default {
   components: {
-    navbar,
+    Navbar,
     recapCard
   },
 

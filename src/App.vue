@@ -189,6 +189,7 @@ $panel-heading-background-color: $grey-dark;
 }
 
 .navbar {
+
   &.is-transparent {
     background-color: transparent;
   }
@@ -210,7 +211,7 @@ $panel-heading-background-color: $grey-dark;
           color: $color-invert;
 
           &.is-active {
-            color: rgba($color-invert, 0.7);
+            color: #d9534f;
           }
         }
 

@@ -143,10 +143,12 @@
 
     <optionsTable 
       title="Active Options"
+      :loader="optionsLoader"
       :options="activeOptions"  />
     
     <optionsTable 
       title="Expired Options"
+      :loader="optionsLoader"
       :options="expiredOptions" />
 
     <div class="columns is-multiline mx-1 my-4">
@@ -155,7 +157,7 @@
           <header class="card-header">
             <p class="card-header-title">{{ item.label }} options</p>
           </header>
-          <div class="card-content">
+          <div class="card-content" v-if="!optionsLoader">
             <div class="columns">
 
               <div class="column">
@@ -172,6 +174,9 @@
               </div>
 
             </div>
+          </div>
+          <div class="card-content" v-else>
+            <loadingIcon />
           </div>
         </div>
       </div>
@@ -240,6 +245,7 @@ export default {
       premiumChartTimeFrame: 'by_day',
       chartPremiumLoader: true,
       options: [],
+      optionsLoader: true,
       allTransactions: [],
     }
   },
@@ -427,6 +433,7 @@ export default {
       this.axios.get(url)
       .then( res => {
         this.options = res.data
+        this.optionsLoader = false
       }) 
     },
 

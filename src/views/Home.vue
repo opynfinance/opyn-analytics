@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <Navbar />
+    <navbar />
 
     <div class="columns is-multiline mx-1 my-2">
 
@@ -185,7 +185,7 @@ import recapCard from '../components/recapCard';
 import deBankTvl from '../components/deBankTVL';
 import loadingIcon from '../components/loadingIcon';
 import optionsTable from '../components/optionsTable';
-import Navbar from '../components/Navbar';
+import navbar from '../components/navbar';
 
 export default {
   components: {
@@ -193,7 +193,7 @@ export default {
     deBankTvl,
     loadingIcon,
     optionsTable,
-    Navbar,
+    navbar,
   },
   data() {
     return {

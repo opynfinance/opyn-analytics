@@ -185,7 +185,7 @@ import recapCard from '../components/recapCard';
 import deBankTvl from '../components/deBankTVL';
 import loadingIcon from '../components/loadingIcon';
 import optionsTable from '../components/optionsTable';
-import Navbar from '../components/navbar'
+import Navbar from '../components/Navbar';
 
 export default {
   components: {

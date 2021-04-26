@@ -48,7 +48,7 @@
 
 <script>
 
-import Navbar from '../components/navbar'
+import Navbar from '../components/Navbar.vue'
 import recapCard from '../components/recapCard'
 
 

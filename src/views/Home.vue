@@ -1,9 +1,7 @@
 <template>
   <div>
 
-    <Logo />
-
-    <h1 class="subtitle has-text-centered">Opyn v2 Gamma Protocol Analytics</h1>
+    <navbar />
 
     <div class="columns is-multiline mx-1 my-2">
 
@@ -187,7 +185,7 @@ import recapCard from '../components/recapCard';
 import deBankTvl from '../components/deBankTVL';
 import loadingIcon from '../components/loadingIcon';
 import optionsTable from '../components/optionsTable';
-import Logo from '../components/Logo'
+import navbar from '../components/navbar';
 
 export default {
   components: {
@@ -195,7 +193,7 @@ export default {
     deBankTvl,
     loadingIcon,
     optionsTable,
-    Logo
+    navbar,
   },
   data() {
     return {
@@ -246,14 +244,6 @@ export default {
     }
   },
   computed: {
-    transactionSortByTimestamp(){
-      return this.allTransactions.slice().sort((a, b) => (b.timestamp > a.timestamp) ? 1 : -1)
-    },
-    last7daysTransactions(){
-      return this.allTransactions.filter( t => {
-        return this.$moment.utc(t.date).diff(this.$moment.utc().subtract(7, 'days')) >= 0
-      })
-    },
     activeOptions(){
       return this.options.filter(option => option.live)
     },

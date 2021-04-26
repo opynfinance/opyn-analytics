@@ -7,7 +7,7 @@ yarn install
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+yarn start
 ```
 
 ### Compiles and minifies for production
@@ -26,5 +26,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Set the following ENV variables
 ```
-VUE_APP_THEGRAPH_ENDPOINT="https://api.thegraph.com/subgraphs/name/opynfinance/gamma-mainnet"
+VUE_APP_OPYN_SUBGRAPH_ENDPOINT="https://api.thegraph.com/subgraphs/name/opynfinance/gamma-mainnet"
+VUE_APP_AIRSWAP_SUBGRAPH_ENDPOINT=https://api.thegraph.com/subgraphs/name/airswap/airswap
 ```

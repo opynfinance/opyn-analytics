@@ -1,5 +1,5 @@
 <template>
-  <div class="column is-one-third">
+  <div :class="`column ${size ? size : 'is-one-third'}`">
     <div class="card has-text-centered">
       <header class="card-header">
         <p class="card-header-title">{{ title }}</p>
@@ -35,6 +35,7 @@ import loadingIcon from '../components/loadingIcon'
 
 export default {
   props: {
+    size: String,
     title: String,
     items: Array,
     valueType: String,

@@ -1,0 +1,63 @@
+{
+  "name": "kpi-v2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@0x/contracts-utils": "^4.6.5",
+    "@0x/order-utils": "^10.4.9",
+    "axios": "^0.21.0",
+    "buefy": "^0.9.4",
+    "chart.js": "^2.9.4",
+    "core-js": "^3.6.5",
+    "firebase": "^8.2.9",
+    "greeks": "^1.0.0",
+    "implied-volatility": "^1.0.0",
+    "lodash": "^4.17.20",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.1.0",
+    "vue": "^2.6.11",
+    "vue-axios": "^3.2.0",
+    "vue-chartkick": "^0.6.1",
+    "vue-google-charts": "^0.3.3",
+    "vue-json-csv": "^1.2.12",
+    "vue-lodash": "^2.1.2",
+    "vue-moment": "^4.1.0",
+    "vue-numeral-filter": "^2.0.0",
+    "vue-router": "^3.4.9",
+    "vuex": "^3.6.0",
+    "vuex-persistedstate": "^4.0.0-beta.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

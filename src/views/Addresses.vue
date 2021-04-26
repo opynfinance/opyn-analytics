@@ -6,7 +6,7 @@
     <div class="columns is-multiline mx-1 my-2">
 
       <recapCard 
-        size="is-one-quarter"
+        size="is-one-fifth"
         title="Mint" 
         :loader="mintLoader"
         :items="[
@@ -15,7 +15,7 @@
       />
 
       <recapCard 
-        size="is-one-quarter"
+        size="is-one-fifth"
         title="Sold" 
         :loader="otokenTradesLoader || swapsLoader"
         :items="[
@@ -24,7 +24,7 @@
       />
 
       <recapCard 
-        size="is-one-quarter"
+        size="is-one-fifth"
         title="Bought" 
         :loader="otokenTradesLoader || swapsLoader"
         :items="[
@@ -33,11 +33,20 @@
       />
 
       <recapCard 
-        size="is-one-quarter"
+        size="is-one-fifth"
         title="Mint and Sold" 
         :loader="otokenTradesLoader || swapsLoader || mintLoader"
         :items="[
           {label: 'Unique Addresses', value: `${uniqueMintAndSoldAddresses.length}` }
+        ]"
+      />
+
+      <recapCard 
+        size="is-one-fifth"
+        title="All Actions" 
+        :loader="otokenTradesLoader || swapsLoader || mintLoader"
+        :items="[
+          {label: 'Unique Addresses', value: `${allUniqueAddresses.length}` }
         ]"
       />
 
@@ -105,8 +114,15 @@ export default {
     },
     uniqueMintAndSoldAddresses(){
       return this.uniqueSellerAddresses.filter( seller => 
-        { return this.uniqueMintShortActionsAddresses.indexOf(seller) > 0; }
+        { return this.uniqueMintShortActionsAddresses.indexOf(seller) >= 0; }
       );
+    },
+    allUniqueAddresses(){
+      const allAddresses = this.uniqueMintShortActionsAddresses.concat(
+        this.uniqueSellerAddresses,
+        this.uniqueBuyerAddresses
+      );
+      return [...new Set(allAddresses)];
     },
     allTrades(){
       let trades = [];

@@ -28,4 +28,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ```
 VUE_APP_OPYN_SUBGRAPH_ENDPOINT="https://api.thegraph.com/subgraphs/name/opynfinance/gamma-mainnet"
 VUE_APP_AIRSWAP_SUBGRAPH_ENDPOINT=https://api.thegraph.com/subgraphs/name/airswap/airswap
+VUE_APP_OPYN_SUBGRAPH_ENDPOINT_V1=https://api.thegraph.com/subgraphs/name/aparnakr/opyn
 ```

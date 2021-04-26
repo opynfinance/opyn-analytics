@@ -1,21 +1,29 @@
 <template>
-  <div class="container">
+  <div>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-menu">
+        <div class="navbar-end">
+
     
-    <Logo />
+            <router-link 
+              :class="`navbar-item ${this.$route.name === 'Volumes' ? 'is-active' : ''}`" 
+              to="/" >
+              Volumes
+            </router-link>
+   
+            <router-link 
+              :class="`navbar-item ${this.$route.name === 'Addresses' ? 'is-active' : ''}`" 
+              to="/addresses">
+              Addresses
+            </router-link>
 
-    <h1 class="subtitle has-text-centered">Opyn v2 Gamma Protocol Analytics</h1>
-
-    <div class="has-text-centered ">
-      <div class="columns">
-        <div class="column">
-          <router-link to="/">Volumes</router-link>
-        </div>
-        <div class="column">
-          <router-link to="/addresses">Addresses</router-link>
         </div>
       </div>
-    </div>
+    </nav>
 
+     <Logo />
+
+    <h1 class="subtitle has-text-centered">Opyn v2 Gamma Protocol Analytics</h1>
 
   </div>
 </template>

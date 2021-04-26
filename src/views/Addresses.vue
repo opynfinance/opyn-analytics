@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <Navbar />
+    <navbar />
 
     <div class="columns is-multiline mx-1 my-2">
 
@@ -48,13 +48,13 @@
 
 <script>
 
-import Navbar from '../components/Navbar.vue'
+import navbar from '../components/navbar'
 import recapCard from '../components/recapCard'
 
 
 export default {
   components: {
-    Navbar,
+    navbar,
     recapCard
   },
 

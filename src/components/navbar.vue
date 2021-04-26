@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <Logo />
+    <logo />
 
     <h1 class="subtitle has-text-centered">Opyn v2 Gamma Protocol Analytics</h1>
 
@@ -21,12 +21,12 @@
 </template>
 
 <script>
-import Logo from '../components/Logo.vue'
+import logo from '../components/logo'
 
 
 export default {
   components: {
-    Logo
+    logo
   },
 }
 </script>

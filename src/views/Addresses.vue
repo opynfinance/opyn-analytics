@@ -331,7 +331,7 @@ export default {
     },
 
     addressesByWeek(array, addressName){
-      let arrayByWeek = _(array)
+      let arrayByWeek = _(array.sort((a, b) => a.timestamp.localeCompare(b.timestamp)))
       .groupBy( item => this.$moment.utc( this.$moment.unix(item['timestamp']) , 'MM-DD-YY').startOf('isoWeek') )
       .map((objs, key) => ({
         'date': this.$moment.utc(key).format('MM-DD-YY'),

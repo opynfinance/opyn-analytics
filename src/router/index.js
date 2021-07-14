@@ -2,7 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Addresses from "../views/Addresses.vue";
-import Home from "../views/Home.vue";
+import v1Addresses from "../views/v1Addresses.vue";
+import Volumes from "../views/Volumes.vue";
 
 
 Vue.use(VueRouter);
@@ -10,13 +11,18 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    name: "Volumes",
+    component: Volumes
   },
   {
     path: "/addresses",
     name: "Addresses",
     component: Addresses
+  },
+  {
+    path: "/v1-addresses",
+    name: "v1Addresses",
+    component: v1Addresses
   }
 ];
 

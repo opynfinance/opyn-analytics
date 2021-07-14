@@ -1,12 +1,12 @@
 <template>
   <div>
 
-    <Navbar />
+    <navbar />
 
     <div class="columns is-multiline mx-1 my-2">
 
       <recapCard 
-        size="is-one-quarter"
+        size="is-one-fifth"
         title="Mint" 
         :loader="mintLoader"
         :items="[
@@ -15,7 +15,7 @@
       />
 
       <recapCard 
-        size="is-one-quarter"
+        size="is-one-fifth"
         title="Sold" 
         :loader="otokenTradesLoader || swapsLoader"
         :items="[
@@ -24,7 +24,7 @@
       />
 
       <recapCard 
-        size="is-one-quarter"
+        size="is-one-fifth"
         title="Bought" 
         :loader="otokenTradesLoader || swapsLoader"
         :items="[
@@ -33,7 +33,7 @@
       />
 
       <recapCard 
-        size="is-one-quarter"
+        size="is-one-fifth"
         title="Mint and Sold" 
         :loader="otokenTradesLoader || swapsLoader || mintLoader"
         :items="[
@@ -41,21 +41,51 @@
         ]"
       />
 
+      <recapCard 
+        size="is-one-fifth"
+        title="All Actions" 
+        :loader="otokenTradesLoader || swapsLoader || mintLoader"
+        :items="[
+          {label: 'Unique Addresses', value: `${allUniqueAddresses.length}` }
+        ]"
+      />
+
     </div>
+
+    <fullChart 
+      title="Mint Weekly Unique Addresses (UTC time - week starts on Monday)"
+      :loader="mintLoader"
+      :chartData="uniqueMintShortActionsAddressesByWeek"
+    />
+
+    <fullChart 
+      title="Sell Weekly Unique Addresses (UTC time - week starts on Monday)"
+      :loader="otokenTradesLoader || swapsLoader"
+      :chartData="uniqueSellerAddressesByWeek"
+    />
+
+    <fullChart 
+      title="Buy Weekly Unique Addresses (UTC time - week starts on Monday)"
+      :loader="otokenTradesLoader || swapsLoader"
+      :chartData="uniqueBuyerAddressesByWeek"
+    />
 
   </div>
 </template>
 
 <script>
+import _ from 'lodash';
 
-import Navbar from '../components/navbar'
+import navbar from '../components/navbar'
 import recapCard from '../components/recapCard'
+import fullChart from '../components/fullChart'
 
 
 export default {
   components: {
-    Navbar,
-    recapCard
+    navbar,
+    recapCard,
+    fullChart
   },
 
   data() {
@@ -84,9 +114,54 @@ export default {
     },
     uniqueMintAndSoldAddresses(){
       return this.uniqueSellerAddresses.filter( seller => 
-        { return this.uniqueMintShortActionsAddresses.indexOf(seller) > 0; }
+        { return this.uniqueMintShortActionsAddresses.indexOf(seller) >= 0; }
       );
-    }
+    },
+    allUniqueAddresses(){
+      const allAddresses = this.uniqueMintShortActionsAddresses.concat(
+        this.uniqueSellerAddresses,
+        this.uniqueBuyerAddresses
+      );
+      return [...new Set(allAddresses)];
+    },
+    allTrades(){
+      let trades = [];
+
+      this.otokenTrades.map( trade => {
+        trades.push({ 
+          timestamp: trade.timestamp, 
+          seller: trade.seller, 
+          buyer: trade.buyer
+        })
+      });
+
+      this.swaps.map( swap => {
+        trades.push({ 
+          timestamp: swap.timestamp, 
+          seller: swap.seller, 
+          buyer: swap.buyer
+        })    
+      });
+
+      return trades
+
+    },
+    uniqueMintShortActionsAddressesByWeek(){
+      return this.addressesByWeek(this.mintShortActions, 'to').map ( 
+        item => Object.values({ date: item.date, value: new Set(item.addresses).size }) 
+      )
+    },
+    uniqueSellerAddressesByWeek(){
+      return this.addressesByWeek(this.allTrades, 'seller').map ( 
+        item => Object.values({ date: item.date, value: new Set(item.addresses).size }) 
+      )
+    },
+    uniqueBuyerAddressesByWeek(){
+      return this.addressesByWeek(this.allTrades, 'buyer').map ( 
+        item => Object.values({ date: item.date, value: new Set(item.addresses).size }) 
+      )
+    },
+   
   },
 
   async mounted() {
@@ -99,7 +174,7 @@ export default {
     getOTokensAndTransactions(){
       const query = `
       {
-        otokens(orderBy: expiryTimestamp, orderDirection: desc) {
+        otokens(first: 1000, orderBy: expiryTimestamp, orderDirection: asc) {
           id
           symbol
           name
@@ -152,7 +227,7 @@ export default {
     async get0xTransaction(otokenAddress){
       const query = `
         {
-          otokenTrades(first: 1000, orderBy: timestamp, orderDirection: desc, where: { oToken: "${otokenAddress}" }){
+          otokenTrades(first: 1000, orderBy: timestamp, orderDirection: asc, where: { oToken: "${otokenAddress}" }){
             id
             timestamp
             buyer
@@ -186,7 +261,7 @@ export default {
     getAirswapTransaction(otokenAddress){
       const query = `
         {
-          swaps(first: 1000, orderBy: timestamp, orderDirection: desc, where: { affiliateToken_contains: "${otokenAddress}" }){
+          swaps(first: 1000, orderBy: timestamp, orderDirection: asc, where: { affiliateToken_contains: "${otokenAddress}" }){
             id
             from
             to
@@ -214,15 +289,19 @@ export default {
         JSON.stringify({ query })
       ).then((response) => {
         response.data.data.swaps.map ( trade => {
-          this.swaps.push(trade)
-          // seller
-          if (trade.sender.id === otokenAddress) {
-            this.sellers.push(trade.sender.id)
-            this.buyers.push(trade.signer.id)
-          } else {
-            this.sellers.push(trade.signer.id)
-            this.buyers.push(trade.sender.id)
-          }
+          
+          const seller = trade.sender.id === otokenAddress ? trade.sender.id : trade.signer.id
+          const buyer = trade.sender.id === otokenAddress ? trade.signer.id : trade.sender.id
+
+          this.sellers.push(seller)
+          this.buyers.push(buyer)
+
+          this.swaps.push({
+            timestamp: trade.timestamp,
+            seller: seller,
+            buyer: buyer
+          })
+
         })
         return;
       })
@@ -232,7 +311,7 @@ export default {
 
       const query = `
         {
-          mintShortActions(first: 1000){
+          mintShortActions(first: 1000, orderBy: timestamp, orderDirection: asc ){
             id
             timestamp
             to
@@ -249,7 +328,21 @@ export default {
         this.mintShortActions = response.data.data.mintShortActions;
         this.mintLoader = false
       })
-    }
+    },
+
+    addressesByWeek(array, addressName){
+      let arrayByWeek = _(array)
+      .groupBy( item => this.$moment.utc( this.$moment.unix(item['timestamp']) , 'MM-DD-YY').startOf('isoWeek') )
+      .map((objs, key) => ({
+        'date': this.$moment.utc(key).format('MM-DD-YY'),
+          'addresses': objs.map ( obj => {
+            return obj[addressName]
+          })
+        }))
+      .value()
+
+      return arrayByWeek
+    },
 
   }
 

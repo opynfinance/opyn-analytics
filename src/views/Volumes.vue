@@ -257,6 +257,7 @@ export default {
       return this.options.filter(option => !option.live)
     },
     oneWeekOptionsVolume(){
+      console.log(this.options)
       let oTokens = this.options.filter( option => option.duration <= 8 )
       let totalVolume = this.returnTotalVolumesByOptions(oTokens)
       return { 
@@ -450,6 +451,7 @@ export default {
       oTokens.map( oToken => {
         totalVolumes += Number(oToken.total_volumes)
       })
+      console.log(totalVolumes)
       return totalVolumes
     },
 
